@@ -1,6 +1,9 @@
 #include "game.h"
 #include "block.h"
+#include "blocks.cpp"
 #include <random>
+#include "position.h"
+#include "grid.h"
 
 Game::Game() {
     grid = Grid();
@@ -17,6 +20,7 @@ Block Game::GetRandomBlock() {
         blocks = GetAllBlocks();
     }
     int randomIndex = rand() % blocks.size();
+    // uses Block class - dependency
     Block block = blocks[randomIndex];
     blocks.erase(blocks.begin() + randomIndex);
     return block;
@@ -117,20 +121,33 @@ void Game::RotateBlock() {
 }
 
 void Game::LockBlock() {
+    // Get the positions of the current block's tiles
     std::vector<Position> tiles = currentBlock.GetCellPosition();
-    for (Position item: tiles) {
-        grid.grid[item.row][item.column] = currentBlock.id;
 
+    // Lock the block's positions into the grid by setting their state
+    for (const Position &item: tiles) {
+        if (!grid.IsCellOutside(item.row, item.column)) { // Ensure the cell is inside the grid
+            grid.gridPositions[item.row][item.column].state = currentBlock.id; // Set state to block ID
+        }
     }
+
+    // Transition to the next block
     currentBlock = nextBlock;
+
+    // Check if the new block fits; if not, the game is over
     if (!BlockFits()) {
         gameOver = true;
-        currentBlock.id = 10;
-        currentBlock.Draw(11, 11);
+        currentBlock.id = 10; // Mark current block as "frozen" (or other appropriate logic)
+        currentBlock.Draw(11, 11); // Draw the block in the "frozen" state
     }
 
+    // Update the score for placing a block
     UpdateScore(0, 5);
+
+    // Get a new random block
     nextBlock = GetRandomBlock();
+
+    // Clear any full rows and update the score accordingly
     int rowsCleared = grid.ClearFullRows();
     UpdateScore(rowsCleared, 0);
 }

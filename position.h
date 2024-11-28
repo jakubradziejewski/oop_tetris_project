@@ -1,8 +1,9 @@
 #pragma once
 
-class Position{
+class Position {
 public:
-    Position(int row, int column);
+    explicit Position(int row = 0, int column = 0, int state = 0);
     int row;
     int column;
+    int state;
 };

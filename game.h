@@ -1,22 +1,24 @@
 #pragma once
 #include "grid.h"
 #include <vector>
-#include "blocks.cpp"
-class Game{
+#include "block.h"
+
+class Game {
 public:
     Game();
 
     void Draw();
     void HandleInput();
-    void MoveBlockLeft();
-    void MoveBlockRight();
     void MoveBlockDown();
 
     bool gameOver;
     int score;
     int level;
+protected:
+    Grid grid;                 // Composition: The grid owned by the game
 private:
-    Grid grid;
+    void MoveBlockLeft();
+    void MoveBlockRight();
     Block GetRandomBlock();
     static std::vector<Block> GetAllBlocks();
     bool IsBlockOutside();
@@ -25,7 +27,8 @@ private:
     bool BlockFits();
     void Reset();
     void UpdateScore(int linesCleared, int moveDownPoints);
-    std::vector<Block> blocks;
-    Block currentBlock;
-    Block nextBlock;
+
+    std::vector<Block> blocks; // Collection of all block types
+    Block currentBlock;        // The block currently being moved
+    Block nextBlock;           // The next block to spawn
 };

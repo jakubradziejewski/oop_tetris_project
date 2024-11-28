@@ -1,18 +1,17 @@
 #include "colors.h"
 
-const Color darkGrey = {26, 31, 40, 255};
-const Color green = {47, 230, 23, 255};
-const Color red = {232, 18, 18, 255};
-const Color orange = {226, 116, 17, 255};
-const Color yellow = {237, 234, 4, 255};
-const Color purple = {166, 0, 247, 255};
-const Color cyan = {21, 204, 209, 255};
-const Color blue = {13, 64, 216, 255};
-const Color lightBlue = {59, 85, 162, 255};
-const Color darkBlue = {44, 44, 127, 255};
-const Color black = {0,0,0};
+const Color midnightStorm = {50, 50, 60, 255};
+const Color forestGlow = {34, 177, 76, 255};
+const Color crimsonBlaze = {237, 28, 36, 255};
+const Color sunsetBurst = {255, 127, 39, 255};
+const Color goldenRay = {255, 242, 0, 255};
+const Color violetDream = {163, 73, 164, 255};
+const Color oceanBreeze = {0, 183, 195, 255};
+const Color azureWave = {0, 102, 204, 255};
+const Color skyDusk = {112, 146, 190, 255};
+const Color deepNight = {33, 50, 150, 255};
+const Color charcoalMist = {20, 20, 20, 255};
 
 std::vector<Color> GetCellColor() {
-    return {darkGrey, green, red, orange, yellow, purple, cyan, blue, lightBlue, darkBlue, black};
-
+    return {midnightStorm, forestGlow, crimsonBlaze, sunsetBurst, goldenRay, violetDream, oceanBreeze, azureWave, skyDusk, deepNight, charcoalMist};
 }
