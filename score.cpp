@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <iostream>
 #include <utility>
+#include <cmath>
 
 ScoreHandler::ScoreHandler(std::string fname) : filename(std::move(fname)) {
     loadScores();
@@ -56,14 +57,20 @@ void ScoreHandler::updateHighScores(int score, int level) {
 }
 
 void ScoreHandler::updateScore(int linesCleared, int moveDownPoints) {
-    if (linesCleared > 0) {
-        currentScore += 10 * (linesCleared + 1) * (linesCleared + 1) * currentLevel;
-    }
-    currentLevel = currentScore / 200 + 1;
-    currentScore += moveDownPoints;
-}
+    const int baseScores[4] = {40, 100, 300, 1200};
 
+    if (linesCleared > 0) {
+        int baseScore = baseScores[linesCleared - 1];
+        int levelMultiplier = currentLevel + 1;
+        currentScore += baseScore * levelMultiplier;
+    }
+
+    currentScore += moveDownPoints*(currentLevel*0.2+1);
+
+    const int baseThreshold = 100;
+    currentLevel = std::log2(currentScore / baseThreshold+1);
+}
 void ScoreHandler::resetScore() {
     currentScore = 0;
-    currentLevel = 1;
+    currentLevel = 0;
 }
