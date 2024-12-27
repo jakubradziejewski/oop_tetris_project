@@ -44,7 +44,8 @@ add_executable(oop_project_cpp main.cpp
         score.h
         score.cpp
         draw.h
-        draw.cpp)
+        draw.cpp
+        block_types.h)
 
 # set the include directory
 target_include_directories(oop_project_cpp PRIVATE ${raylib_INCLUDE_DIRS})

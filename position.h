@@ -1,9 +1,10 @@
 #pragma once
+#include "block_types.h"
 
 class Position {
 public:
-    explicit Position(int row = 0, int column = 0, int state = 0);
+    explicit Position(int row = 0, int column = 0, BlockType state = BlockType::None);
     int row;
     int column;
-    int state;
+    BlockType state;
 };

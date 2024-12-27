@@ -1,12 +1,11 @@
 #include "block.h"
 
-
 template<typename T>
 void Block<T>::Draw(int offsetX, int offsetY) {
     std::vector<Position> tiles = GetCellPosition();
     for (Position item: tiles) {
         DrawRectangle(item.column * cellSize + offsetX, item.row * cellSize + offsetY, cellSize - 1, cellSize - 1,
-                      colors[id]);
+                      colors[static_cast<int>(id)]);
     }
 }
 
@@ -30,7 +29,7 @@ std::vector<Position> Block<T>::GetCellPosition() {
 template<typename T>
 void Block<T>::Rotate() {
     rotationState++;
-    if (rotationState == (int) cells.size()) {
+    if (rotationState == static_cast<int>(cells.size())) {
         rotationState = 0;
     }
 }

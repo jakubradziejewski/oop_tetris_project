@@ -1,10 +1,11 @@
 #include "block.h"
 #include "position.h"
+#include "block_types.h"
 
 class LBlock : public Block<LBlock> {
 public:
     LBlock() {
-        id = 1;
+        id = BlockType::LBlock;
         cells[0] = {Position(0, 2), Position(1, 0), Position(1, 1), Position(1, 2)};
         cells[1] = {Position(0, 1), Position(1, 1), Position(2, 1), Position(2, 2)};
         cells[2] = {Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 0)};
@@ -16,7 +17,7 @@ public:
 class JBlock : public Block<JBlock> {
 public:
     JBlock() {
-        id = 2;
+        id = BlockType::JBlock;
         cells[0] = {Position(0, 0), Position(1, 0), Position(1, 1), Position(1, 2)};
         cells[1] = {Position(0, 1), Position(0, 2), Position(1, 1), Position(2, 1)};
         cells[2] = {Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 2)};
@@ -28,7 +29,7 @@ public:
 class IBlock : public Block<IBlock> {
 public:
     IBlock() {
-        id = 3;
+        id = BlockType::IBlock;
         cells[0] = {Position(1, 0), Position(1, 1), Position(1, 2), Position(1, 3)};
         cells[1] = {Position(0, 2), Position(1, 2), Position(2, 2), Position(3, 2)};
         cells[2] = {Position(2, 0), Position(2, 1), Position(2, 2), Position(2, 3)};
@@ -40,7 +41,7 @@ public:
 class OBlock : public Block<OBlock> {
 public:
     OBlock() {
-        id = 4;
+        id = BlockType::OBlock;
         cells[0] = {Position(0, 0), Position(0, 1), Position(1, 0), Position(1, 1)};
         Move(0, 4);
     }
@@ -49,7 +50,7 @@ public:
 class SBlock : public Block<SBlock> {
 public:
     SBlock() {
-        id = 5;
+        id = BlockType::SBlock;
         cells[0] = {Position(0, 1), Position(0, 2), Position(1, 0), Position(1, 1)};
         cells[1] = {Position(0, 1), Position(1, 1), Position(1, 2), Position(2, 2)};
         cells[2] = {Position(1, 1), Position(1, 2), Position(2, 0), Position(2, 1)};
@@ -61,7 +62,7 @@ public:
 class TBlock : public Block<TBlock> {
 public:
     TBlock() {
-        id = 6;
+        id = BlockType::TBlock;
         cells[0] = {Position(0, 1), Position(1, 0), Position(1, 1), Position(1, 2)};
         cells[1] = {Position(0, 1), Position(1, 1), Position(1, 2), Position(2, 1)};
         cells[2] = {Position(1, 0), Position(1, 1), Position(1, 2), Position(2, 1)};
@@ -73,7 +74,7 @@ public:
 class ZBlock : public Block<ZBlock> {
 public:
     ZBlock() {
-        id = 7;
+        id = BlockType::ZBlock;
         cells[0] = {Position(0, 0), Position(0, 1), Position(1, 1), Position(1, 2)};
         cells[1] = {Position(0, 2), Position(1, 1), Position(1, 2), Position(2, 1)};
         cells[2] = {Position(1, 0), Position(1, 1), Position(2, 1), Position(2, 2)};

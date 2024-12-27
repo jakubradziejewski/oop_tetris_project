@@ -13,5 +13,6 @@ const Color deepNight = {33, 50, 150, 255};
 const Color charcoalMist = {20, 20, 20, 255};
 
 std::vector<Color> GetCellColor() {
-    return {midnightStorm, forestGlow, crimsonBlaze, sunsetBurst, goldenRay, violetDream, oceanBreeze, azureWave, skyDusk, deepNight, charcoalMist};
+    return {midnightStorm, forestGlow, crimsonBlaze, sunsetBurst, goldenRay, violetDream, oceanBreeze, azureWave,
+            skyDusk, deepNight, charcoalMist};
 }

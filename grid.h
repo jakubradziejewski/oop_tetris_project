@@ -3,6 +3,7 @@
 #include <vector>
 #include "position.h"
 #include "colors.h"
+#include "block_types.h"
 
 class Grid {
 public:
@@ -29,6 +30,8 @@ private:
     void ClearRow(int row);
 
     void MoveRowDown(int row, int numRows);
+
+    void DrawGridLines();
 
     int numRows;                                 // Number of rows in the grid
     int numCols;                                 // Number of columns in the grid

@@ -5,6 +5,7 @@
 #include "position.h"
 #include "grid.h"
 #include "score.h"
+#include "block_types.h"
 
 Game::Game() {
     grid = Grid();
@@ -41,10 +42,10 @@ void Game::Draw() {
     grid.Draw();
     currentBlock->Draw(11, 11);
     switch (nextBlock->id) {
-        case 3:
+        case BlockType::IBlock:
             nextBlock->Draw(255, 370);
             break;
-        case 4:
+        case BlockType::OBlock:
             nextBlock->Draw(255, 360);
             break;
         default:
@@ -135,7 +136,7 @@ void Game::LockBlock() {
 
     if (!BlockFits()) {
         gameOver = true;
-        currentBlock->id = 10;
+        currentBlock->id = BlockType::GameOver;
         currentBlock->Draw(11, 11);
         scoreHandler.updateHighScores(scoreHandler.currentScore, scoreHandler.currentLevel);
         scoreHandler.updateScore(0, -5);
@@ -163,4 +164,3 @@ void Game::Reset() {
     nextBlock = GetRandomBlock();
     scoreHandler.resetScore();
 }
-
