@@ -1,7 +1,7 @@
 #include "block.h"
 #include "position.h"
 
-class LBlock : public Block {
+class LBlock :  public Block<LBlock> {
 public:
     LBlock() {
         id = 1;
@@ -13,7 +13,7 @@ public:
     }
 };
 
-class JBlock : public Block {
+class JBlock : public Block<JBlock> {
 public:
     JBlock() {
         id = 2;
@@ -25,7 +25,7 @@ public:
     }
 };
 
-class IBlock : public Block {
+class IBlock : public Block<IBlock> {
 public:
     IBlock() {
         id = 3;
@@ -37,7 +37,7 @@ public:
     }
 };
 
-class OBlock : public Block {
+class OBlock : public Block<OBlock> {
 public:
     OBlock() {
         id = 4;
@@ -46,7 +46,7 @@ public:
     }
 };
 
-class SBlock : public Block {
+class SBlock : public Block<SBlock> {
 public:
     SBlock() {
         id = 5;
@@ -58,7 +58,7 @@ public:
     }
 };
 
-class TBlock : public Block {
+class TBlock : public Block<TBlock> {
 public:
     TBlock() {
         id = 6;
@@ -70,7 +70,7 @@ public:
     }
 };
 
-class ZBlock : public Block {
+class ZBlock : public Block<ZBlock> {
 public:
     ZBlock() {
         id = 7;

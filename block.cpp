@@ -1,14 +1,9 @@
 #include "block.h"
 
-Block::Block() {
-    cellSize = 30;
-    rotationState = 0;
-    colors = GetCellColor();
-    rowOffset = 0;
-    columnOffset = 0;
-}
 
-void Block::Draw(int offsetX, int offsetY) {
+
+template<typename T>
+void Block<T>::Draw(int offsetX, int offsetY) {
     std::vector<Position> tiles = GetCellPosition();
     for (Position item: tiles) {
         DrawRectangle(item.column * cellSize + offsetX, item.row * cellSize + offsetY, cellSize - 1, cellSize - 1,
@@ -16,12 +11,14 @@ void Block::Draw(int offsetX, int offsetY) {
     }
 }
 
-void Block::Move(int rows, int columns) {
+template<typename T>
+void Block<T>::Move(int rows, int columns) {
     rowOffset += rows;
     columnOffset += columns;
 }
 
-std::vector<Position> Block::GetCellPosition() {
+template<typename T>
+std::vector<Position> Block<T>::GetCellPosition() {
     std::vector<Position> tiles = cells[rotationState];
     std::vector<Position> movedTiles;
     for (Position item: tiles) {
@@ -31,16 +28,27 @@ std::vector<Position> Block::GetCellPosition() {
     return movedTiles;
 }
 
-void Block::Rotate() {
+template<typename T>
+void Block<T>::Rotate() {
     rotationState++;
     if (rotationState == (int) cells.size()) {
         rotationState = 0;
     }
 }
 
-void Block::UndoRotation() {
+template<typename T>
+void Block<T>::UndoRotation() {
     rotationState--;
     if (rotationState == -1) {
         rotationState = cells.size() - 1;
     }
 }
+
+// Template class explicit instantiation
+template class Block<class LBlock>;
+template class Block<class JBlock>;
+template class Block<class IBlock>;
+template class Block<class OBlock>;
+template class Block<class SBlock>;
+template class Block<class TBlock>;
+template class Block<class ZBlock>;
