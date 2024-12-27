@@ -33,7 +33,7 @@ public:
     int getLevel() const { return currentLevel; }
 
     int currentScore = 0;
-    int currentLevel = 1;
+    int currentLevel = 0;
 
 private:
     static const int MAX_SCORES = 5;

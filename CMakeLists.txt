@@ -42,7 +42,9 @@ add_executable(oop_project_cpp main.cpp
         game.h
         game.cpp
         score.h
-        score.cpp)
+        score.cpp
+        draw.h
+        draw.cpp)
 
 # set the include directory
 target_include_directories(oop_project_cpp PRIVATE ${raylib_INCLUDE_DIRS})
