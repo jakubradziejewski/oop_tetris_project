@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.27)
-project(hello_raylib_with_cmake)
+project(oop_project_cpp)
 
 set(CMAKE_C_STANDARD 23)
 
@@ -29,7 +29,7 @@ else()
     message(STATUS "Using local ${LIB1}")
 endif()
 
-add_executable(hello_raylib_with_cmake main.cpp
+add_executable(oop_project_cpp main.cpp
         grid.h
         grid.cpp
         block.h
@@ -43,7 +43,7 @@ add_executable(hello_raylib_with_cmake main.cpp
         game.cpp)
 
 # set the include directory
-target_include_directories(hello_raylib_with_cmake PRIVATE ${raylib_INCLUDE_DIRS})
+target_include_directories(oop_project_cpp PRIVATE ${raylib_INCLUDE_DIRS})
 
 # link all libraries to the project
-target_link_libraries(hello_raylib_with_cmake PRIVATE ${LIB1})
+target_link_libraries(oop_project_cpp PRIVATE ${LIB1})
