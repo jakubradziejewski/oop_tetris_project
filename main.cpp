@@ -1,5 +1,4 @@
 #include <cstdio>
-#include <iostream>
 #include <raylib.h>
 #include "game.h"
 
@@ -24,7 +23,7 @@ int main() {
 
     while (!WindowShouldClose()) {
         game.HandleInput();
-        if (EventTriggered(0.3 - game.level * 0.015)) {
+        if (EventTriggered(0.3 - game.scoreHandler.currentLevel * 0.015)) {
             game.MoveBlockDown();
         }
         BeginDrawing();
@@ -39,13 +38,13 @@ int main() {
 
         DrawRectangleRounded({320, 55, 170, 60}, 0.3, 6, skyDusk);
         char scoreText[10];
-        sprintf(scoreText, "%d", game.score);
+        sprintf(scoreText, "%d", game.scoreHandler.getScore());
         Vector2 textSize = MeasureTextEx(font, scoreText, 38, 2);
         DrawTextEx(font, scoreText, {320 + (170 - textSize.x) / 2, 65}, 38, 2, WHITE);
 
         DrawRectangleRounded({320, 170, 170, 60}, 0.3, 6, skyDusk);
         char levelText[10];
-        sprintf(levelText, "%d", game.level);
+        sprintf(levelText, "%d", game.scoreHandler.getLevel());
         Vector2 levelSize = MeasureTextEx(font, levelText, 38, 2);
         DrawTextEx(font, levelText, {320 + (170 - levelSize.x) / 2, 185}, 38, 2, WHITE);
 

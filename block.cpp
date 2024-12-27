@@ -1,7 +1,6 @@
 #include "block.h"
 
 
-
 template<typename T>
 void Block<T>::Draw(int offsetX, int offsetY) {
     std::vector<Position> tiles = GetCellPosition();
@@ -45,10 +44,23 @@ void Block<T>::UndoRotation() {
 }
 
 // Template class explicit instantiation
-template class Block<class LBlock>;
-template class Block<class JBlock>;
-template class Block<class IBlock>;
-template class Block<class OBlock>;
-template class Block<class SBlock>;
-template class Block<class TBlock>;
-template class Block<class ZBlock>;
+template
+class Block<class LBlock>;
+
+template
+class Block<class JBlock>;
+
+template
+class Block<class IBlock>;
+
+template
+class Block<class OBlock>;
+
+template
+class Block<class SBlock>;
+
+template
+class Block<class TBlock>;
+
+template
+class Block<class ZBlock>;

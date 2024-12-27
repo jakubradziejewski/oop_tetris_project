@@ -2,9 +2,9 @@
 #include "block.h"
 #include "blocks.cpp"
 #include <memory>
-#include <random>
 #include "position.h"
 #include "grid.h"
+#include "score.h"
 
 Game::Game() {
     grid = Grid();
@@ -12,8 +12,7 @@ Game::Game() {
     currentBlock = GetRandomBlock();
     nextBlock = GetRandomBlock();
     gameOver = false;
-    score = 0;
-    level = 1;
+    scoreHandler = ScoreHandler("highscores.txt");
 }
 
 std::unique_ptr<BlockBase> Game::GetRandomBlock() {
@@ -138,11 +137,13 @@ void Game::LockBlock() {
         gameOver = true;
         currentBlock->id = 10;
         currentBlock->Draw(11, 11);
+        scoreHandler.updateHighScores(scoreHandler.currentScore, scoreHandler.currentLevel);
+        scoreHandler.updateScore(0, -5);
     }
 
-    UpdateScore(0, 5);
+    scoreHandler.updateScore(0, 5);
     int rowsCleared = grid.ClearFullRows();
-    UpdateScore(rowsCleared, 0);
+    scoreHandler.updateScore(rowsCleared, 0);
 }
 
 bool Game::BlockFits() {
@@ -160,14 +161,6 @@ void Game::Reset() {
     blocks = GetAllBlocks();
     currentBlock = GetRandomBlock();
     nextBlock = GetRandomBlock();
-    score = 0;
-    level = 1;
+    scoreHandler.resetScore();
 }
 
-void Game::UpdateScore(int linesCleared, int moveDownPoints) {
-    if (linesCleared > 0) {
-        score += 10 * (linesCleared + 1) * (linesCleared + 1) * level;
-    }
-    level = score / 200 + 1;
-    score += moveDownPoints;
-}

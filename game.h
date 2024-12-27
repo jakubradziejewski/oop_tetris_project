@@ -3,6 +3,7 @@
 #include <vector>
 #include "block.h"
 #include <memory>
+#include "score.h"
 class BlockBase;
 class LBlock;
 class JBlock;
@@ -20,8 +21,7 @@ public:
     void MoveBlockDown();
 
     bool gameOver;
-    int score;
-    int level;
+    ScoreHandler scoreHandler;
 protected:
     Grid grid;                 // Composition: The grid owned by the game
 private:
@@ -32,7 +32,6 @@ private:
     void LockBlock();
     bool BlockFits();
     void Reset();
-    void UpdateScore(int linesCleared, int moveDownPoints);
 
     std::unique_ptr<BlockBase> GetRandomBlock();
     static std::vector<std::unique_ptr<BlockBase>> GetAllBlocks();
