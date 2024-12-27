@@ -1,15 +1,15 @@
 #include "game.h"
 #include "block.h"
-#include "blocks.cpp"
+#include "blocks.h"  
 #include <memory>
 #include "position.h"
 #include "grid.h"
 #include "score.h"
 #include "block_types.h"
 
-Game::Game() {
+Game::Game() : blockFactory(std::make_unique<TetrisBlockFactory>()) {
     grid = Grid();
-    blocks = GetAllBlocks();
+    blocks = blockFactory->createAllBlocks();
     currentBlock = GetRandomBlock();
     nextBlock = GetRandomBlock();
     gameOver = false;
@@ -18,7 +18,7 @@ Game::Game() {
 
 std::unique_ptr<BlockBase> Game::GetRandomBlock() {
     if (blocks.empty()) {
-        blocks = GetAllBlocks();
+        blocks = blockFactory->createAllBlocks();
     }
     int randomIndex = rand() % blocks.size();
     std::unique_ptr<BlockBase> block = std::move(blocks[randomIndex]);
@@ -26,17 +26,7 @@ std::unique_ptr<BlockBase> Game::GetRandomBlock() {
     return block;
 }
 
-std::vector<std::unique_ptr<BlockBase>> Game::GetAllBlocks() {
-    std::vector<std::unique_ptr<BlockBase>> newBlocks;
-    newBlocks.push_back(std::make_unique<IBlock>());
-    newBlocks.push_back(std::make_unique<JBlock>());
-    newBlocks.push_back(std::make_unique<LBlock>());
-    newBlocks.push_back(std::make_unique<OBlock>());
-    newBlocks.push_back(std::make_unique<SBlock>());
-    newBlocks.push_back(std::make_unique<TBlock>());
-    newBlocks.push_back(std::make_unique<ZBlock>());
-    return newBlocks;
-}
+
 
 void Game::Draw() {
     grid.Draw();
@@ -159,7 +149,7 @@ bool Game::BlockFits() {
 
 void Game::Reset() {
     grid.Initialize();
-    blocks = GetAllBlocks();
+    blocks = blockFactory->createAllBlocks();
     currentBlock = GetRandomBlock();
     nextBlock = GetRandomBlock();
     scoreHandler.resetScore();
