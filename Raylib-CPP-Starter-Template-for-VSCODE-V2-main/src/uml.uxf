@@ -1,0 +1,53 @@
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><help_text></help_text><element><id>UMLClass</id><coordinates><x>304</x><y>0</y><w>336</w><h>272</h></coordinates><panel_attributes>Game
+--
+#grid: Grid  
+-blocks: std::vector&lt;Block&gt;
+-currentBlock: Block 
+-nextBlock: Block
++gameOver: bool
++score: int
++level: int
+--
+-MoveBlockLeft(): void
+-MoveBlockRight(): void
+-GetRandomBlock(): Block
+-GetAllBlocks: static std::vector&lt;Block&gt;
+-IsBlockOutside(): bool
+-RotateBlock(): void
+-LockBlock(): void
+-BlockFits(): bool
+ -Reset(): void
+ -UpdateScore(int, int): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>504</x><y>360</y><w>272</w><h>160</h></coordinates><panel_attributes>_Block_
+--
+#cellSize: int
+#rotationState: int
+#rowOffset: int
+#columnOffset: int
++id : int
++cells: std::map&lt;int, std::vector&lt;Position&gt;&gt;
++colors: std::vector&lt;Color&gt;
+--
++Draw(int, int): void
++Rotate(): void
++Move(int, int): void
++UndoRotation(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>368</x><y>416</y><w>88</w><h>56</h></coordinates><panel_attributes>Position
+--
++row: int
++column: int
++state: int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>448</x><y>416</y><w>72</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>70;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>440</x><y>624</y><w>80</w><h>24</h></coordinates><panel_attributes>IBlock</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>72</x><y>360</y><w>240</w><h>200</h></coordinates><panel_attributes>Grid
+--
+-numRows: int
+-numCols: int          
+-int cellSize
+-colors: std::vector&lt;Color&gt;
++gridPositions: std::vector&lt;std::vector&lt;Position&gt;&gt; 
+--
+-IsRowFull(int): bool
+-ClearRow(int): void
+-MoveRowDown(int, int): void
++Initialize(): void
++Print(): void
++IsCellOutside(int, int): bool;
++IsCellEmpty(int, int): bool
++Draw(): void
++ClearFullRows(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>304</x><y>440</y><w>80</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;80;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>264</x><y>624</y><w>80</w><h>24</h></coordinates><panel_attributes>LBlock</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>352</x><y>624</y><w>80</w><h>24</h></coordinates><panel_attributes>JBlock</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>616</x><y>624</y><w>80</w><h>24</h></coordinates><panel_attributes>OBlock</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>792</x><y>624</y><w>80</w><h>24</h></coordinates><panel_attributes>SBBlock</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>704</x><y>624</y><w>80</w><h>24</h></coordinates><panel_attributes>TBBlock</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>528</x><y>624</y><w>80</w><h>24</h></coordinates><panel_attributes>ZBBlock</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>632</x><y>512</y><w>24</w><h>88</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>296</x><y>576</y><w>552</w><h>24</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>10;10;670;10</additional_attributes></element><element><id>Relation</id><coordinates><x>824</x><y>576</y><w>24</w><h>64</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>736</x><y>576</y><w>24</w><h>64</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>648</x><y>576</y><w>24</w><h>64</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>560</x><y>576</y><w>24</w><h>64</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>472</x><y>576</y><w>24</w><h>64</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>384</x><y>576</y><w>24</w><h>64</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>296</x><y>576</y><w>24</w><h>64</h></coordinates><panel_attributes>lt=-</panel_attributes><additional_attributes>10;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>184</x><y>40</y><w>136</w><h>336</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>150;11;10;10;10;400</additional_attributes></element><element><id>Relation</id><coordinates><x>632</x><y>96</y><w>88</w><h>280</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>90;330;90;10;10;10</additional_attributes></element></diagram>
