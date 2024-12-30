@@ -5,7 +5,7 @@
 
 double lastUpdateTime = 0;
 
-bool RowFull(double interval) {
+bool Timer(double interval) {
     double currentTime = GetTime();
     if (currentTime - lastUpdateTime >= interval) {
         lastUpdateTime = currentTime;
@@ -22,17 +22,18 @@ int main() {
 
     while (!WindowShouldClose()) {
         game.HandleInput();
-        if (RowFull(0.3 - pow(game.scoreHandler.getLevel(), 1/2) * 0.005)) { //this line "decides" how fast will the blocks go down 
+        if (Timer(0.3 - pow(game.scoreHandler.getLevel(), 1/2) * 0.005)) { //this line "decides" how fast will the blocks go down 
             game.MoveBlockDown();
         }
 
+        //bunch of raylib functions for drawing and calls to game.draw and functions in draw.cpp
         BeginDrawing();
         Interface(font, game, deepNight, skyDusk);
         game.Draw();
         if (game.gameOver) {
             EndDrawing();
             GameOver(font, game);
-             while (true) {
+             while (!WindowShouldClose()) {
                 EndDrawing();
                 if (GetKeyPressed() != 0) { 
                     game.HandleInput(); //this will call reset function, which is private
@@ -41,6 +42,8 @@ int main() {
                 GameOver(font, game);
             }
         }
+        //line for "x" button to work
+        if (WindowShouldClose()) break;
         EndDrawing();
     }
 

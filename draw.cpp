@@ -28,12 +28,29 @@ void Interface(Font font, const Game& game, Color deepNight, Color skyDusk) {
     DrawRectangleRounded({320, 300, 170, 180}, 0.3, 6, skyDusk);
 }
 
+//function for displaying "game over" text and leaderboard
 void GameOver(Font font, const Game& game) {
     BeginDrawing();
     ClearBackground(deepNight);
-    DrawTextEx(font, "GAME OVER", {320, 500}, 30, 2, WHITE);
-    DrawTextEx(font, "HIGH SCORE", {320, 535}, 30, 2, WHITE);
-    char levelText[10];
-    sprintf(levelText, "%d", game.scoreHandler.getHighScores()[0].score);
-    DrawTextEx(font, levelText, {320, 570}, 30, 2, WHITE);
+    DrawTextEx(font, "GAME OVER", {120, 50}, 50, 2, WHITE);
+    DrawTextEx(font, "HIGH SCORES", {150, 105}, 30, 2, WHITE);
+    auto HighScores = game.scoreHandler.getHighScores();
+    int breakpoint = static_cast<int>(HighScores.size()) < game.scoreHandler.getMaxScores()
+                     ? static_cast<int>(HighScores.size())
+                     : game.scoreHandler.getMaxScores();
+
+    // loop displaying leaderboard
+    for (int i = 0; i < breakpoint; i++)
+    {
+        char levelText[100];
+        sprintf(levelText, "%d.", i + 1);
+        DrawTextEx(font, levelText, {50, float(110 + (i+1) * 30)}, 25, 2, WHITE);
+
+        sprintf(levelText, "Score: %d", HighScores[i].score);
+        DrawTextEx(font, levelText, {90, float(110 + (i+1) * 30)}, 25, 2, WHITE);
+        
+        sprintf(levelText, "Level: %d", HighScores[i].level);
+        DrawTextEx(font, levelText, {350, float(110 + (i+1) * 30)}, 25, 2, WHITE);
+    }
+    
 }

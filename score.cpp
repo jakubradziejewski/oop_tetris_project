@@ -9,6 +9,7 @@ ScoreHandler::ScoreHandler(std::string fname) : filename(std::move(fname)) {
     loadScores();
 }
 
+// this would read scores from our highscore.txt file
 void ScoreHandler::loadScores() {
     try {
         std::ifstream file(filename);
@@ -26,6 +27,7 @@ void ScoreHandler::loadScores() {
     }
 }
 
+//this saves the scores
 void ScoreHandler::saveScores() {
     try {
         std::ofstream file(filename);
@@ -41,6 +43,7 @@ void ScoreHandler::saveScores() {
     }
 }
 
+//this updates scores in file
 void ScoreHandler::updateHighScores(int score, int level) {
     ScoreEntry newEntry{score, level};
 
@@ -56,6 +59,7 @@ void ScoreHandler::updateHighScores(int score, int level) {
     saveScores();
 }
 
+//this updates score in our game 
 void ScoreHandler::updateScore(int linesCleared, int moveDownPoints) {
     const int baseScores[4] = {40, 100, 300, 1200};
 
@@ -70,15 +74,8 @@ void ScoreHandler::updateScore(int linesCleared, int moveDownPoints) {
     const int baseThreshold = 100;
     currentLevel = std::log2(currentScore / baseThreshold+1);
 }
+//this resets current score
 void ScoreHandler::resetScore() {
     currentScore = 0;
     currentLevel = 0;
 }
-
-// ScoreEntry ScoreHandler::getHighScore()
-// {
-//     loadScores();
-//     auto entry = highScores[0];
-//     std::cerr << entry.score << " " << entry.level << std::endl;
-//     return entry;
-// }

@@ -11,8 +11,6 @@ public:
 
     void MakeGrid();
 
-    void PrintGrid();
-
     bool IsCellOutside(int row, int column) const;
 
     bool IsCellEmpty(int row, int column);
