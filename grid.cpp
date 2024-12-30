@@ -4,11 +4,11 @@
 #include "block_types.h"
 
 Grid::Grid() : numRows(20), numCols(10), cellSize(30) {
-    Initialize();
+    MakeGrid();
     colors = GetCellColor();
 }
 
-void Grid::Initialize() {
+void Grid::MakeGrid() {
     gridPositions.resize(numRows, std::vector<Position>(numCols, Position(0, 0, BlockType::None)));
     for (int row = 0; row < numRows; ++row) {
         for (int column = 0; column < numCols; ++column) {
@@ -17,7 +17,7 @@ void Grid::Initialize() {
     }
 }
 
-void Grid::Print() {
+void Grid::PrintGrid() {
     for (const auto &row: gridPositions) {
         for (const auto &pos: row) {
             std::cout << static_cast<int>(pos.state) << " ";

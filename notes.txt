@@ -1,0 +1,32 @@
+TODO
+- zmiana nazw, uml
+- aggregation/composition
+- protected
+
+
+- new / smart pointer - okropienstwo, i hate that
+- constructor - to jest wsm
+- destructor - reset() trzeba jakos madrze przerobic chyba
+- virtual method - i.e override - w sumie nie za bardzo widze jak madrze to zrobic bo wszystkie bloczki zachowuja sie tak samo
+- operator overloagind + read/write file + error handling - easy peasy
+- enumeration class - gpt wyplulo kolory jako przyklad
+#include <iostream>
+
+enum class Color {
+    Red,
+    Green,
+    Blue
+};
+
+int main() {
+    Color c = Color::Red;
+
+    // Accessing values with scope resolution operator
+    if (c == Color::Red) {
+        std::cout << "Color is Red!" << std::endl;
+    }
+    return 0;
+}
+
+- generic class - position? chyba najprosciej XD
+- unit tests - o ile mi to bedzie dzialac... XD

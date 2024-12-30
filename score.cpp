@@ -74,3 +74,11 @@ void ScoreHandler::resetScore() {
     currentScore = 0;
     currentLevel = 0;
 }
+
+// ScoreEntry ScoreHandler::getHighScore()
+// {
+//     loadScores();
+//     auto entry = highScores[0];
+//     std::cerr << entry.score << " " << entry.level << std::endl;
+//     return entry;
+// }

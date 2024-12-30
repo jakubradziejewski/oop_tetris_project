@@ -1,6 +1,7 @@
 #include "game.h"
 #include "block.h"
 #include <memory>
+#include <chrono>
 #include "position.h"
 #include "grid.h"
 #include "score.h"
@@ -12,7 +13,7 @@ Game::Game() : blockFactory(std::make_unique<TetrisBlockFactory>()) {
     currentBlock = GetRandomBlock();
     nextBlock = GetRandomBlock();
     gameOver = false;
-    scoreHandler = ScoreHandler("highscores.txt");
+    scoreHandler = ScoreHandler("src/highscores.txt");
 }
 
 std::unique_ptr<BlockBase> Game::GetRandomBlock() {
@@ -44,24 +45,33 @@ void Game::Draw() {
 }
 
 void Game::HandleInput() {
-    int keyPressed = GetKeyPressed();
-    if (gameOver && keyPressed != 0) {
+    static auto lastMoveTime = std::chrono::steady_clock::now();
+    auto currentTime = std::chrono::steady_clock::now();
+
+    if (gameOver) {
         gameOver = false;
         Reset();
     }
-    switch (keyPressed) {
-        case KEY_LEFT:
+
+    int delay = 100; 
+    if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) delay = 75;
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastMoveTime).count() > delay) {
+        if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
             MoveBlockLeft();
-            break;
-        case KEY_RIGHT:
+            lastMoveTime = currentTime;
+        }
+        if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
             MoveBlockRight();
-            break;
-        case KEY_DOWN:
+            lastMoveTime = currentTime;
+        }
+        if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
             MoveBlockDown();
-            break;
-        case KEY_UP:
+            lastMoveTime = currentTime;
+        }
+        if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) {
             RotateBlock();
-            break;
+            lastMoveTime = currentTime;
+        }
     }
 }
 
@@ -107,7 +117,7 @@ void Game::RotateBlock() {
     if (!gameOver) {
         currentBlock->Rotate();
         if (IsBlockOutside() || !BlockFits()) {
-            currentBlock->UndoRotation();
+            currentBlock->UnRotate();
         }
     }
 }
@@ -147,7 +157,7 @@ bool Game::BlockFits() {
 }
 
 void Game::Reset() {
-    grid.Initialize();
+    grid.MakeGrid();
     blocks = blockFactory->createAllBlocks();
     currentBlock = GetRandomBlock();
     nextBlock = GetRandomBlock();
