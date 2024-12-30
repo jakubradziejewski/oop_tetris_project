@@ -3,7 +3,6 @@
 #include <raylib.h>
 #include <vector>
 
-// Color declarations with descriptive names
 extern const Color midnightStorm;
 extern const Color forestGlow;
 extern const Color crimsonBlaze;
