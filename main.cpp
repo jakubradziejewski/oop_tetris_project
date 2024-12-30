@@ -1,11 +1,10 @@
 #include <raylib.h>
-#include <math.h>
 #include "game.h"
 #include "draw.h"
 
 double lastUpdateTime = 0;
 
-bool Timer(double interval) {
+bool EventTriggered(double interval) {
     double currentTime = GetTime();
     if (currentTime - lastUpdateTime >= interval) {
         lastUpdateTime = currentTime;
@@ -15,35 +14,23 @@ bool Timer(double interval) {
 }
 
 int main() {
-    InitWindow(500, 620, "Tetris");
+    InitWindow(500, 620, "Ray lib Tetris");
     SetTargetFPS(60);
     Game game = Game();
     Font font = LoadFontEx("Font/monogram.ttf", 64, nullptr, 0);
 
     while (!WindowShouldClose()) {
         game.HandleInput();
-        if (Timer(0.3 - pow(game.scoreHandler.getLevel(), 1/2) * 0.005)) { //this line "decides" how fast will the blocks go down 
+        if (EventTriggered(0.3 - game.scoreHandler.currentLevel * 0.015)) {
             game.MoveBlockDown();
         }
 
-        //bunch of raylib functions for drawing and calls to game.draw and functions in draw.cpp
         BeginDrawing();
         Interface(font, game, deepNight, skyDusk);
         game.Draw();
         if (game.gameOver) {
-            EndDrawing();
-            GameOver(font, game);
-             while (!WindowShouldClose()) {
-                EndDrawing();
-                if (GetKeyPressed() != 0) { 
-                    game.HandleInput(); //this will call reset function, which is private
-                    break;
-                }
-                GameOver(font, game);
-            }
+            GameOver(font);
         }
-        //line for "x" button to work
-        if (WindowShouldClose()) break;
         EndDrawing();
     }
 

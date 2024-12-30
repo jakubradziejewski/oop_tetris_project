@@ -9,7 +9,9 @@ class Grid {
 public:
     Grid();
 
-    void MakeGrid();
+    void Initialize();
+
+    void Print();
 
     bool IsCellOutside(int row, int column) const;
 
@@ -29,7 +31,7 @@ private:
 
     void MoveRowDown(int row, int numRows);
 
-    //void DrawGridLines();
+    void DrawGridLines();
 
     int numRows;                                 // Number of rows in the grid
     int numCols;                                 // Number of columns in the grid

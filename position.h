@@ -1,7 +1,6 @@
 #pragma once
 #include "block_types.h"
 
-// class descripting a block
 class Position {
 public:
     explicit Position(int row = 0, int column = 0, BlockType state = BlockType::None);

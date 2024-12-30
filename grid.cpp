@@ -3,14 +3,12 @@
 #include "raylib.h"
 #include "block_types.h"
 
-//initial
 Grid::Grid() : numRows(20), numCols(10), cellSize(30) {
-    MakeGrid();
+    Initialize();
     colors = GetCellColor();
 }
 
-// this function creates grid
-void Grid::MakeGrid() {
+void Grid::Initialize() {
     gridPositions.resize(numRows, std::vector<Position>(numCols, Position(0, 0, BlockType::None)));
     for (int row = 0; row < numRows; ++row) {
         for (int column = 0; column < numCols; ++column) {
@@ -19,7 +17,15 @@ void Grid::MakeGrid() {
     }
 }
 
-//function that draws the grid
+void Grid::Print() {
+    for (const auto &row: gridPositions) {
+        for (const auto &pos: row) {
+            std::cout << static_cast<int>(pos.state) << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
 void Grid::Draw() {
     for (const auto &row: gridPositions) {
         for (const auto &pos: row) {
@@ -35,18 +41,16 @@ void Grid::Draw() {
     }
 }
 
-//function to check wheather a certain cell of a block is outside the grid
+
 bool Grid::IsCellOutside(int row, int column) const {
     return row < 0 || row >= numRows || column < 0 || column >= numCols;
 }
 
-//function to check wheather a certain cell of a grid is available
 bool Grid::IsCellEmpty(int row, int column) {
     if (IsCellOutside(row, column)) return false;
     return gridPositions[row][column].state == BlockType::None;
 }
 
-//function to clear rows that are complete
 int Grid::ClearFullRows() {
     int completed = 0;
     for (int row = numRows - 1; row >= 0; --row) {
@@ -60,7 +64,6 @@ int Grid::ClearFullRows() {
     return completed;
 }
 
-//function to check wheather a row is complete
 bool Grid::IsRowFull(int row) {
     for (const auto &pos: gridPositions[row]) {
         if (pos.state == BlockType::None) {
@@ -70,14 +73,12 @@ bool Grid::IsRowFull(int row) {
     return true;
 }
 
-//function to clear row (any, does not check anything)
 void Grid::ClearRow(int row) {
     for (auto &pos: gridPositions[row]) {
         pos.state = BlockType::None;
     }
 }
 
-//function to move rows that are above completed rows down after we erase them
 void Grid::MoveRowDown(int row, int numRowsDown) {
     for (int column = 0; column < numCols; ++column) {
         int targetRow = row + numRowsDown;

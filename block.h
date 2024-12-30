@@ -8,7 +8,10 @@
 
 class BlockBase {
 public:
-    virtual ~BlockBase() { }
+    virtual ~BlockBase() {
+        // Base class cleanup logic (if needed).
+        // For example: std::cerr << "BlockBase Destructor called\n";
+    }
 
     virtual void Draw(int offsetX, int offsetY) = 0;
 
@@ -18,7 +21,7 @@ public:
 
     virtual void Move(int rows, int columns) = 0;
 
-    virtual void UnRotate() = 0;
+    virtual void UndoRotation() = 0;
 
     BlockType id{BlockType::None};
 };
@@ -28,7 +31,7 @@ class Block : public BlockBase {
 public:
     Block();
 
-    ~Block() override;
+    ~Block() override; // Explicit destructor
 
     void Draw(int offsetX, int offsetY) override;
 
@@ -38,7 +41,7 @@ public:
 
     void Move(int rows, int columns) override;
 
-    void UnRotate() override;
+    void UndoRotation() override;
 
     std::map<int, std::vector<Position>> cells;
     std::vector<Color> colors;
@@ -49,12 +52,12 @@ protected:
     int rowOffset;
     int columnOffset;
 
-    int *dynamicData; // raw pointers
+    int *dynamicData; // Example of raw pointer
 };
 
-// constructor
+// Constructor initializes dynamic resource
 template<typename T>
-Block<T>::Block() : dynamicData(new int[100]) { // dynamic allocation
+Block<T>::Block() : dynamicData(new int[100]) { // Allocate array
     cellSize = 30;
     rotationState = 0;
     colors = GetCellColor();
@@ -62,9 +65,9 @@ Block<T>::Block() : dynamicData(new int[100]) { // dynamic allocation
     columnOffset = 0;
 }
 
-// destructor for blocks
+// Destructor cleans up raw pointer
 template<typename T>
 Block<T>::~Block() {
-    delete[] dynamicData; 
-    dynamicData = nullptr; 
+    delete[] dynamicData; // Release memory
+    dynamicData = nullptr; // Avoid dangling pointer
 }

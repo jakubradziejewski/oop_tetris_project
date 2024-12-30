@@ -1,23 +1,20 @@
 #include "game.h"
 #include "block.h"
 #include <memory>
-#include <chrono>
 #include "position.h"
 #include "grid.h"
 #include "score.h"
 #include "block_types.h"
 
-//initial state
 Game::Game() : blockFactory(std::make_unique<TetrisBlockFactory>()) {
     grid = Grid();
     blocks = blockFactory->createAllBlocks();
     currentBlock = GetRandomBlock();
     nextBlock = GetRandomBlock();
     gameOver = false;
-    scoreHandler = ScoreHandler("src/highscores.txt");
+    scoreHandler = ScoreHandler("highscores.txt");
 }
 
-//function to get random block, ensures that all blocks will be used
 std::unique_ptr<BlockBase> Game::GetRandomBlock() {
     if (blocks.empty()) {
         blocks = blockFactory->createAllBlocks();
@@ -29,7 +26,7 @@ std::unique_ptr<BlockBase> Game::GetRandomBlock() {
 }
 
 
-//function for drawing blocks depending on their type
+
 void Game::Draw() {
     grid.Draw();
     currentBlock->Draw(11, 11);
@@ -46,39 +43,28 @@ void Game::Draw() {
     }
 }
 
-//function for handling input data, it ensures that holding a key would make the blocks to move few times and not only once
 void Game::HandleInput() {
-    static auto lastMoveTime = std::chrono::steady_clock::now();
-    auto currentTime = std::chrono::steady_clock::now();
-
-    if (gameOver) {
+    int keyPressed = GetKeyPressed();
+    if (gameOver && keyPressed != 0) {
         gameOver = false;
         Reset();
     }
-
-    int delay = 150; 
-    if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) delay = 75;
-    if (std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastMoveTime).count() > delay) {
-        if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
+    switch (keyPressed) {
+        case KEY_LEFT:
             MoveBlockLeft();
-            lastMoveTime = currentTime;
-        }
-        if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
+            break;
+        case KEY_RIGHT:
             MoveBlockRight();
-            lastMoveTime = currentTime;
-        }
-        if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
+            break;
+        case KEY_DOWN:
             MoveBlockDown();
-            lastMoveTime = currentTime;
-        }
-        if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) {
+            break;
+        case KEY_UP:
             RotateBlock();
-            lastMoveTime = currentTime;
-        }
+            break;
     }
 }
 
-//function to move block in the left direction
 void Game::MoveBlockLeft() {
     if (!gameOver) {
         currentBlock->Move(0, -1);
@@ -88,7 +74,6 @@ void Game::MoveBlockLeft() {
     }
 }
 
-//function to move block in the right direction
 void Game::MoveBlockRight() {
     if (!gameOver) {
         currentBlock->Move(0, 1);
@@ -98,7 +83,6 @@ void Game::MoveBlockRight() {
     }
 }
 
-// function to move block down and lock it, if it reached other blocks
 void Game::MoveBlockDown() {
     if (!gameOver) {
         currentBlock->Move(1, 0);
@@ -109,7 +93,6 @@ void Game::MoveBlockDown() {
     }
 }
 
-// fucntion to checks wheather a block fits in the grid
 bool Game::IsBlockOutside() {
     std::vector<Position> tiles = currentBlock->GetCellPosition();
     for (Position item: tiles) {
@@ -120,18 +103,15 @@ bool Game::IsBlockOutside() {
     return false;
 }
 
-// function to rotate block
 void Game::RotateBlock() {
     if (!gameOver) {
         currentBlock->Rotate();
         if (IsBlockOutside() || !BlockFits()) {
-            currentBlock->UnRotate();
+            currentBlock->UndoRotation();
         }
     }
 }
 
-//this function "locks" a block in certain position so it is drawn by raylib and ensures no two blocks would be at the same place
-//also it switches next block to current block and if it is too much (we reached the end of game state), it changes gameover state
 void Game::LockBlock() {
     std::vector<Position> tiles = currentBlock->GetCellPosition();
     for (const Position &item: tiles) {
@@ -156,7 +136,6 @@ void Game::LockBlock() {
     scoreHandler.updateScore(rowsCleared, 0);
 }
 
-//function for checking wheather a state of our block is valid (i.e all cells are empty)
 bool Game::BlockFits() {
     std::vector<Position> tiles = currentBlock->GetCellPosition();
     for (Position item: tiles) {
@@ -168,7 +147,7 @@ bool Game::BlockFits() {
 }
 
 void Game::Reset() {
-    grid.MakeGrid();
+    grid.Initialize();
     blocks = blockFactory->createAllBlocks();
     currentBlock = GetRandomBlock();
     nextBlock = GetRandomBlock();

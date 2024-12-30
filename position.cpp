@@ -5,5 +5,5 @@
 Position::Position(int row, int column, BlockType state) {
     this->row = row;
     this->column = column;
-    this->state = state; 
+    this->state = state; // Initialize state during construction
 }

@@ -1,6 +1,5 @@
 #include "block.h"
 
-// function to draw a block
 template<typename T>
 void Block<T>::Draw(int offsetX, int offsetY) {
     std::vector<Position> tiles = GetCellPosition();
@@ -10,14 +9,12 @@ void Block<T>::Draw(int offsetX, int offsetY) {
     }
 }
 
-// function to move block
 template<typename T>
 void Block<T>::Move(int rows, int columns) {
     rowOffset += rows;
     columnOffset += columns;
 }
 
-// function to get actual position of block
 template<typename T>
 std::vector<Position> Block<T>::GetCellPosition() {
     std::vector<Position> tiles = cells[rotationState];
@@ -29,7 +26,6 @@ std::vector<Position> Block<T>::GetCellPosition() {
     return movedTiles;
 }
 
-// two functions - for rotation of blocks and unrotation
 template<typename T>
 void Block<T>::Rotate() {
     rotationState++;
@@ -39,13 +35,14 @@ void Block<T>::Rotate() {
 }
 
 template<typename T>
-void Block<T>::UnRotate() {
+void Block<T>::UndoRotation() {
     rotationState--;
     if (rotationState == -1) {
         rotationState = cells.size() - 1;
     }
 }
 
+// Template class explicit instantiation
 template
 class Block<class LBlock>;
 
