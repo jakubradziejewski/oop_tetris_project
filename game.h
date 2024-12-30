@@ -35,7 +35,7 @@ public:
     bool gameOver;
     ScoreHandler scoreHandler;
 protected:
-    Grid grid;                 // Composition: The grid owned by the game
+    Grid grid;                 
 private:
     void MoveBlockLeft();
 
