@@ -51,7 +51,6 @@ protected:
     int *dynamicData;
 };
 
-// constructor
 template<typename T>
 Block<T>::Block() : dynamicData(new int[100]) {
     cellSize = 30;
@@ -61,7 +60,6 @@ Block<T>::Block() : dynamicData(new int[100]) {
     columnOffset = 0;
 }
 
-// destructor
 template<typename T>
 Block<T>::~Block() {
     delete[] dynamicData;
