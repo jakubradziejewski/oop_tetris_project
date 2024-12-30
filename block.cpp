@@ -15,6 +15,7 @@ void Block<T>::Move(int rows, int columns) {
     columnOffset += columns;
 }
 
+
 template<typename T>
 std::vector<Position> Block<T>::GetCellPosition() {
     std::vector<Position> tiles = cells[rotationState];
@@ -35,14 +36,13 @@ void Block<T>::Rotate() {
 }
 
 template<typename T>
-void Block<T>::UndoRotation() {
+void Block<T>::UnRotate() {
     rotationState--;
     if (rotationState == -1) {
         rotationState = cells.size() - 1;
     }
 }
 
-// Template class explicit instantiation
 template
 class Block<class LBlock>;
 

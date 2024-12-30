@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+// struct for easier comparison of scores and storing them
 struct ScoreEntry {
     int score;
     int level;
@@ -16,27 +17,30 @@ struct ScoreEntry {
     }
 };
 
+//class used for handling scores - loading, saving, getting high scores etc
 class ScoreHandler {
 public:
     explicit ScoreHandler(std::string filename = "highscores.txt");
 
     void updateHighScores(int score, int level);
 
-    std::vector<ScoreEntry> getHighScores() const { return highScores; }
+    inline std::vector<ScoreEntry> getHighScores() const { return highScores; }
 
     void updateScore(int linesCleared, int moveDownPoints);
 
     void resetScore();
 
-    int getScore() const { return currentScore; }
+    inline int getScore() const { return currentScore; }
 
-    int getLevel() const { return currentLevel; }
+    inline int getLevel() const { return currentLevel; }
+
+    inline int getMaxScores() const { return MAX_SCORES; }
 
     int currentScore = 0;
     int currentLevel = 0;
 
 private:
-    static const int MAX_SCORES = 5;
+    static const int MAX_SCORES = 10;
     std::string filename;
     std::vector<ScoreEntry> highScores;
 

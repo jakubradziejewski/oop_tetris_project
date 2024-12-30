@@ -1,10 +1,13 @@
 #include "game.h"
 #include "block.h"
 #include <memory>
+#include <chrono>
 #include "position.h"
 #include "grid.h"
 #include "score.h"
 #include "block_types.h"
+#include <random>
+#include <algorithm>
 
 Game::Game() : blockFactory(std::make_unique<TetrisBlockFactory>()) {
     grid = Grid();
@@ -19,12 +22,15 @@ std::unique_ptr<BlockBase> Game::GetRandomBlock() {
     if (blocks.empty()) {
         blocks = blockFactory->createAllBlocks();
     }
-    int randomIndex = rand() % blocks.size();
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(0, blocks.size() - 1);
+
+    int randomIndex = dist(gen);
     std::unique_ptr<BlockBase> block = std::move(blocks[randomIndex]);
     blocks.erase(blocks.begin() + randomIndex);
     return block;
 }
-
 
 
 void Game::Draw() {
@@ -44,24 +50,33 @@ void Game::Draw() {
 }
 
 void Game::HandleInput() {
-    int keyPressed = GetKeyPressed();
-    if (gameOver && keyPressed != 0) {
+    static auto lastMoveTime = std::chrono::steady_clock::now();
+    auto currentTime = std::chrono::steady_clock::now();
+
+    if (gameOver) {
         gameOver = false;
         Reset();
     }
-    switch (keyPressed) {
-        case KEY_LEFT:
+
+    int delay = 150;
+    if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) delay = 75;
+    if (std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastMoveTime).count() > delay) {
+        if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
             MoveBlockLeft();
-            break;
-        case KEY_RIGHT:
+            lastMoveTime = currentTime;
+        }
+        if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
             MoveBlockRight();
-            break;
-        case KEY_DOWN:
+            lastMoveTime = currentTime;
+        }
+        if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
             MoveBlockDown();
-            break;
-        case KEY_UP:
+            lastMoveTime = currentTime;
+        }
+        if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) {
             RotateBlock();
-            break;
+            lastMoveTime = currentTime;
+        }
     }
 }
 
@@ -95,19 +110,17 @@ void Game::MoveBlockDown() {
 
 bool Game::IsBlockOutside() {
     std::vector<Position> tiles = currentBlock->GetCellPosition();
-    for (Position item: tiles) {
-        if (grid.IsCellOutside(item.row, item.column)) {
-            return true;
-        }
-    }
-    return false;
+    return std::any_of(tiles.begin(), tiles.end(), [this](const Position &item) {
+        return grid.IsCellOutside(item.row, item.column);
+    });
 }
+
 
 void Game::RotateBlock() {
     if (!gameOver) {
         currentBlock->Rotate();
         if (IsBlockOutside() || !BlockFits()) {
-            currentBlock->UndoRotation();
+            currentBlock->UnRotate();
         }
     }
 }
@@ -138,16 +151,14 @@ void Game::LockBlock() {
 
 bool Game::BlockFits() {
     std::vector<Position> tiles = currentBlock->GetCellPosition();
-    for (Position item: tiles) {
-        if (!grid.IsCellEmpty(item.row, item.column)) {
-            return false;
-        }
-    }
-    return true;
+    return std::all_of(tiles.begin(), tiles.end(), [this](const Position &item) {
+        return grid.IsCellEmpty(item.row, item.column);
+    });
 }
 
+
 void Game::Reset() {
-    grid.Initialize();
+    grid.MakeGrid();
     blocks = blockFactory->createAllBlocks();
     currentBlock = GetRandomBlock();
     nextBlock = GetRandomBlock();

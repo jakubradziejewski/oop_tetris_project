@@ -9,9 +9,7 @@ class Grid {
 public:
     Grid();
 
-    void Initialize();
-
-    void Print();
+    void MakeGrid();
 
     bool IsCellOutside(int row, int column) const;
 
@@ -21,7 +19,6 @@ public:
 
     int ClearFullRows();
 
-    // Composition: Grid owns all Positions
     std::vector<std::vector<Position>> gridPositions;
 
 private:
@@ -31,11 +28,8 @@ private:
 
     void MoveRowDown(int row, int numRows);
 
-    void DrawGridLines();
-
-    int numRows;                                 // Number of rows in the grid
-    int numCols;                                 // Number of columns in the grid
-    int cellSize;                                // Size of each cell for rendering
-
-    std::vector<Color> colors;                  // Colors for visualization
+    int numRows;
+    int numCols;
+    int cellSize;
+    std::vector<Color> colors;
 };
