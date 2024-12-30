@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 
-// struct for easier comparison of scores and storing them
 struct ScoreEntry {
     int score;
     int level;
@@ -17,7 +16,6 @@ struct ScoreEntry {
     }
 };
 
-//class used for handling scores - loading, saving, getting high scores etc
 class ScoreHandler {
 public:
     explicit ScoreHandler(std::string filename = "highscores.txt");
