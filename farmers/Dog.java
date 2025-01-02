@@ -4,7 +4,7 @@ public class Dog extends Entity {
 
     public Dog(int x, int y, Grid grid) {
         super(x, y, grid, 1);
-        grid.addEntity(this); 
+        grid.addEntity(this); // Ensure the dog is added to the grid
     }
 
     public void setTarget(Rabbit rabbit) {
@@ -25,7 +25,7 @@ public class Dog extends Entity {
                     target = grid.findNearbyRabbit(x, y, DETECTION_RANGE);
                     moveRandomly();
                 }
-                Thread.sleep(1000);
+                Thread.sleep(800);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;

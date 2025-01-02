@@ -44,7 +44,7 @@ public class Simulation {
         new Thread(() -> {
             while (running) {
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(1000);
                     spawnRabbit();
                     grid.updateGrowth();
                     render.render();
