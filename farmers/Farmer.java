@@ -5,7 +5,10 @@ public class Farmer extends Entity {
 
     public Farmer(int x, int y, Grid grid) {
         super(x, y, grid, 1);
-        this.companion = new Dog(x, y, grid);
+        int size = grid.getSize();
+        int dogX = (x + 1) % size;
+        int dogY = (y + 1) % size;
+        this.companion = new Dog(dogX, dogY, grid);
         new Thread(companion).start();
     }
 

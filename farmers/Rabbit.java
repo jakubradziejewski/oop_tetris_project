@@ -1,6 +1,6 @@
 public class Rabbit extends Entity {
     private int eatingDuration;
-    private static final int EATING_TIME = 1500;
+    private static final int EATING_TIME = 500;
 
     public Rabbit(int x, int y, Grid grid) {
         super(x, y, grid, 1);

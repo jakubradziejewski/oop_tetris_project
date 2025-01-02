@@ -3,7 +3,8 @@ public class Dog extends Entity {
     private Rabbit target;
 
     public Dog(int x, int y, Grid grid) {
-        super(x, y, grid, 2);
+        super(x, y, grid, 1);
+        grid.addEntity(this); 
     }
 
     public void setTarget(Rabbit rabbit) {
@@ -24,7 +25,7 @@ public class Dog extends Entity {
                     target = grid.findNearbyRabbit(x, y, DETECTION_RANGE);
                     moveRandomly();
                 }
-                Thread.sleep(800);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;

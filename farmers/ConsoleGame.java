@@ -3,7 +3,7 @@ public class ConsoleGame {
     private final Simulation simulation;
     private final Scanner scanner;
     private boolean running;
-    private final int refreshRate = 500; // milliseconds
+    private final int refreshRate = 1; // milliseconds
 
     public ConsoleGame(int fieldSize, int numFarmers) {
         this.simulation = new Simulation(fieldSize, numFarmers);
@@ -47,6 +47,7 @@ public class ConsoleGame {
                     break;
                 case "s":
                 case "save":
+                    running = false;
                     System.out.print("Enter filename to save: ");
                     String saveFile = scanner.nextLine().trim();
                     simulation.saveState(saveFile);
